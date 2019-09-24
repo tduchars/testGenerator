@@ -41,43 +41,52 @@ function generateProject(done) {
                                 (err, response) => {
                                   if (err) console.log(err);
                                   else {
-                                    fs.writeFile(
-                                      'README.md',
-                                      'Insert contents of README file',
-                                      (err, response) => {
-                                        if (err) console.log(err);
-                                        else {
-                                          rl.question(
-                                            'Would you like to initialize a github repo? (y/n)',
-                                            answer => {
-                                              if (answer === 'n') done(null);
-                                              if (answer === 'y') {
-                                                exec(
-                                                  'git init\ngit add .\ngit commit -m "First commit"',
-                                                  (err, response) => {
-                                                    if (err) console.log(err);
-                                                    else {
-                                                      rl.question(
-                                                        "Paste your github repository's quick setup link...",
-                                                        answer => {
-                                                          exec(
-                                                            `git remote add origin ${answer}\ngit remote -v\ngit push -u origin master`,
-                                                            (err, response) => {
-                                                              if (err)
-                                                                console.log(
-                                                                  err
-                                                                );
-                                                              else done(null);
+                                    rl.question(
+                                      'Would you like to initialize a github repo? (y/n)',
+                                      answer => {
+                                        if (answer === 'n') done(null);
+                                        if (answer === 'y') {
+                                          exec('git init', (err, response) => {
+                                            if (err) console.log(err);
+                                            else {
+                                              exec(
+                                                'git add .',
+                                                (err, response) => {
+                                                  if (err) console.log(err);
+                                                  else {
+                                                    exec(
+                                                      'git commit -m "First commit with index js file"',
+                                                      (err, response) => {
+                                                        if (err)
+                                                          console.log(err);
+                                                        else {
+                                                          rl.question(
+                                                            "Paste your github repository's quick setup link...",
+                                                            answer => {
+                                                              exec(
+                                                                `git remote add origin ${answer}\ngit remote -v\ngit push -u origin master`,
+                                                                (
+                                                                  err,
+                                                                  response
+                                                                ) => {
+                                                                  if (err)
+                                                                    console.log(
+                                                                      err
+                                                                    );
+                                                                  else
+                                                                    done(null);
+                                                                }
+                                                              );
                                                             }
                                                           );
                                                         }
-                                                      );
-                                                    }
+                                                      }
+                                                    );
                                                   }
-                                                );
-                                              }
+                                                }
+                                              );
                                             }
-                                          );
+                                          });
                                         }
                                       }
                                     );
