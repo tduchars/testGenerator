@@ -64,7 +64,7 @@ function generateProject(done) {
                                                             "Paste your github repository's quick setup link...",
                                                             answer => {
                                                               exec(
-                                                                `git remote add origin ${answer}\ngit remote -v\ngit push -u origin master`,
+                                                                `git remote add origin ${answer}\ngit push -u origin master`,
                                                                 (
                                                                   err,
                                                                   response
@@ -74,7 +74,10 @@ function generateProject(done) {
                                                                       err
                                                                     );
                                                                   else
-                                                                    done(null);
+                                                                    done(
+                                                                      null,
+                                                                      response
+                                                                    );
                                                                 }
                                                               );
                                                             }
